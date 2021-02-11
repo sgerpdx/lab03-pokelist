@@ -3,10 +3,13 @@ import PokeItem from './PokeItem.js';
 
 export default class PokeList extends React.Component {
     render() {
-        return (
-            <div>
 
-            </div>
+        const pokeListItem = this.props.pokes.map(poke => <PokeItem poke={poke} />)
+
+        return (
+            <ul className="list-area">
+                {pokeListItem}
+            </ul>
         )
     }
 }
