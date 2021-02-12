@@ -1,3 +1,12 @@
 .pokemon-render {
     list-style-type: none;
+    justify-content: center;
+    margin: 20px;
+}
+
+.poke-text {
+    justify-content: center;
+    height: 12px;
+    text-align: center;
+
 }

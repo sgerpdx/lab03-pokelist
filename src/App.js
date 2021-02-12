@@ -9,7 +9,6 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <p>App is online!</p>
         <Router>
           <Switch>
             <Route
