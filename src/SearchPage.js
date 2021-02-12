@@ -76,10 +76,10 @@ export default class SearchPage extends React.Component {
                         </form>
 
                         <form className="sort-box">
-                            Type
+                            Category
                             <Sort currentValue={this.state.category}
                                 handleChange={this.handleCategoryChange}
-                                options={['pokemon', 'type_1', 'attack', 'defense']} />
+                                options={['pokemon', 'ability_1', 'egg_group_2', 'shape']} />
                         </form>
 
                     </nav>
