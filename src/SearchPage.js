@@ -10,7 +10,7 @@ export default class SearchPage extends React.Component {
     state = {
         pokemon: '',
         order: '',
-        category: '',
+        category: 'pokemon',
     }
 
     handleOrderChange = (e) => {
@@ -33,18 +33,17 @@ export default class SearchPage extends React.Component {
 
 
     render() {
-        console.log(this.state.order);
+        console.log(pokes);
         console.log(this.state.category);
 
         //***this will evaluate the state of 'order' and sort based on that:
-        //if (this.state.order === 'Ascending') {
-        const otherPokes = () => pokes.sort((a, b) =>
-            a[this.state.category].localeCompare(b[this.state.category]));
-        // } else {
-        //     pokes.sort((a, b) =>
-        //         b[this.state.category].localeCompare(a[this.state.category]));
-        // }
-
+        if (this.state.order === 'Ascending') {
+            pokes.sort((a, b) =>
+                a[this.state.category].localeCompare(b[this.state.category]));
+        } else {
+            pokes.sort((a, b) =>
+                b[this.state.category].localeCompare(a[this.state.category]));
+        }
 
         const filteredPokes = pokes.map(poke => <div key={poke._id}>
             <img src={poke.url_image} height="100" />
@@ -78,9 +77,9 @@ export default class SearchPage extends React.Component {
 
                         <form className="sort-box">
                             Type
-                            <Sort currentValue={this.state.cateogry}
+                            <Sort currentValue={this.state.category}
                                 handleChange={this.handleCategoryChange}
-                                options={['Pokemon', 'Type', 'Attack', 'Defense']} />
+                                options={['pokemon', 'type_1', 'attack', 'defense']} />
                         </form>
 
                     </nav>
