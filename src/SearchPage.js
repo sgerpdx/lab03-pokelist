@@ -4,6 +4,7 @@ import PokeList from './PokeList.js';
 import SearchBar from './SearchBar.js';
 import Sort from './Sort.js';
 import Header from './Header.js';
+import style from './SearchPage.css';
 
 export default class SearchPage extends React.Component {
 
