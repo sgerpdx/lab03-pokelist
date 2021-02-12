@@ -8,8 +8,8 @@ import Header from './Header.js';
 export default class SearchPage extends React.Component {
 
     state = {
-        pokemon: '',
-        order: '',
+        query: '',
+        order: 'Ascending',
         category: 'pokemon',
     }
 
@@ -32,11 +32,12 @@ export default class SearchPage extends React.Component {
     }
 
 
-    render() {
-        console.log(pokes);
-        console.log(this.state.category);
 
-        //***this will evaluate the state of 'order' and sort based on that:
+    render() {
+        console.log(this.state.query);
+        console.log(this.state.category);
+        console.log(this.state.order);
+
         if (this.state.order === 'Ascending') {
             pokes.sort((a, b) =>
                 a[this.state.category].localeCompare(b[this.state.category]));
@@ -45,46 +46,51 @@ export default class SearchPage extends React.Component {
                 b[this.state.category].localeCompare(a[this.state.category]));
         }
 
-        const filteredPokes = pokes.map(poke => <div key={poke._id}>
-            <img src={poke.url_image} height="100" />
-            <p>{poke.pokemon}</p>
-        </div>)
+        // const filteredPokes = pokes.map(poke => <div key={poke._id}>
+        //     <img src={poke.url_image} height="100" />
+        //     <p>{poke.pokemon}</p>
+        // </div>)
 
-        //const filteredPokes = this.state.pokes.filter(poke => poke.pokemon.includes(this.state.query))
+        const filteredPokes = pokes.filter(poke => poke.pokemon.includes(this.state.query))
         console.log(filteredPokes);
+
         return (
             <section>
                 <Header />
                 <div className="search-layout">
                     <nav className="search-area">
 
-                        {/* <form className="search-input">
-                            Pokemon
-                            <SearchBar currentValue={this.state.pokemon}
-                                handleChange={this.handlePokemonChange}
-                                options={['Pikachu', 'Charmander', 'Mew']} />
-                            <button>Search by Name</button>
+                        {/* <form className="input-search" onSubmit={this.handleInputSubmit}>
+                            <label>
+                                Pokemon:
+                            <input type="text" currentValue={this.state.query}
+                                    onChange={this.handleInputChange}
+                                    key={pokes.pokemon} />
+                            </label>
+                            <input type="submit" value="Submit" />
                         </form> */}
 
-                        {/* <input onChange={this.handleInputChange} /> */}
+
+                        <SearchBar currentValue={this.state.query}
+                            handleChange={this.handleInputChange}
+                            handleSubmit={this.handleInputSubmit} />
 
                         <form className="sort-box">
-                            Order
+                            Order:
                             <Sort currentValue={this.state.order}
                                 handleChange={this.handleOrderChange}
                                 options={['Ascending', 'Descending']} />
                         </form>
 
                         <form className="sort-box">
-                            Category
+                            Category:
                             <Sort currentValue={this.state.category}
                                 handleChange={this.handleCategoryChange}
                                 options={['pokemon', 'ability_1', 'egg_group_2', 'shape']} />
                         </form>
 
                     </nav>
-                    <div>{filteredPokes}</div>
-                    {/* <PokeList pokes={filteredPokes} /> */}
+                    <PokeList pokes={filteredPokes} />
                 </div>
             </section>
 
