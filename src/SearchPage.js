@@ -10,7 +10,7 @@ export default class SearchPage extends React.Component {
     state = {
         pokemon: '',
         order: '',
-        category: 'Pokemon',
+        category: '',
     }
 
     handleOrderChange = (e) => {
@@ -21,31 +21,38 @@ export default class SearchPage extends React.Component {
 
     handleCategoryChange = (e) => {
         this.setState({
-            category: Number(e.target.value)
+            category: e.target.value
         });
+    }
+
+    handleInputChange = (e) => {
+        this.setState({
+            query: e.target.value
+        })
     }
 
 
     render() {
+        console.log(this.state.order);
+        console.log(this.state.category);
 
-        const filteredPokes = pokes.filter((poke) => {
-            if (!this.state.order && !this.state.category) return true;
+        //***this will evaluate the state of 'order' and sort based on that:
+        //if (this.state.order === 'Ascending') {
+        const otherPokes = () => pokes.sort((a, b) =>
+            a[this.state.category].localeCompare(b[this.state.category]));
+        // } else {
+        //     pokes.sort((a, b) =>
+        //         b[this.state.category].localeCompare(a[this.state.category]));
+        // }
 
-            if (this.state.order && !this.state.category) {
-                if (poke.order === this.state.order) return true;
-            }
 
-            if (!this.state.order && this.state.category) {
-                if (poke.category === this.state.category) return true;
-            }
+        const filteredPokes = pokes.map(poke => <div key={poke._id}>
+            <img src={poke.url_image} height="100" />
+            <p>{poke.pokemon}</p>
+        </div>)
 
-            if (this.state.order && this.state.category) {
-                if (poke.order === this.state.order && poke.category === this.state.category) return true;
-            }
-
-            return false;
-        });
-
+        //const filteredPokes = this.state.pokes.filter(poke => poke.pokemon.includes(this.state.query))
+        console.log(filteredPokes);
         return (
             <section>
                 <Header />
@@ -60,24 +67,28 @@ export default class SearchPage extends React.Component {
                             <button>Search by Name</button>
                         </form> */}
 
-                        <form className="sort-filter">
+                        {/* <input onChange={this.handleInputChange} /> */}
+
+                        <form className="sort-box">
                             Order
                             <Sort currentValue={this.state.order}
                                 handleChange={this.handleOrderChange}
                                 options={['Ascending', 'Descending']} />
                         </form>
 
-                        <form className="sort-filter">
-                            Category
+                        <form className="sort-box">
+                            Type
                             <Sort currentValue={this.state.cateogry}
                                 handleChange={this.handleCategoryChange}
                                 options={['Pokemon', 'Type', 'Attack', 'Defense']} />
                         </form>
 
                     </nav>
-                    <PokeList pokes={filteredPokes} />
+                    <div>{filteredPokes}</div>
+                    {/* <PokeList pokes={filteredPokes} /> */}
                 </div>
             </section>
+
 
         )
     }

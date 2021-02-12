@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import pokes from './data.js';
 
 export default class PokeItem extends React.Component {
     render() {

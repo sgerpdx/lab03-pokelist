@@ -1,5 +1,6 @@
 import React from 'react'
 import PokeItem from './PokeItem.js';
+import pokes from './data.js';
 
 export default class PokeList extends React.Component {
     render() {
@@ -7,7 +8,8 @@ export default class PokeList extends React.Component {
         const pokeListItem = this.props.pokes.map(poke => <PokeItem poke={poke} />)
 
         return (
-            <ul className="list-area">
+            <ul className="list-area"
+                key={pokes.pokemon}>
                 {pokeListItem}
             </ul>
         )
