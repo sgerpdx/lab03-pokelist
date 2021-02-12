@@ -1,18 +1,30 @@
 import React from 'react'
 import style from './Header.css';
 import pokes from './data.js';
+import { NavLink, withRouter } from 'react-router-dom';
 
 export default class Header extends React.Component {
     render() {
         return (
-            <div className="header-area"
-                key={pokes.pokemon}>
-                <div className="left-space"></div>
+            <header className="nav-links">
+                <NavLink exact activeClassName="selected" to="/">
+                    Home
+                </NavLink>
+
+                <NavLink exact activeClassName="selected" to="/search">
+                    Search
+                </NavLink>
                 <p className="title-area">Pokedexception</p>
-                <div className="right-space">
-                    <span className="nav-link">Home</span>
-                </div>
-            </div>
+            </header>
+
+            // <div className="header-area"
+            //     key={pokes.pokemon}>
+            //     <div className="left-space"></div>
+            //     <p className="title-area">Pokedexception</p>
+            //     <div className="right-space">
+            //         <span className="nav-link">Home</span>
+            //     </div>
+            // </div>
         )
     }
 }
