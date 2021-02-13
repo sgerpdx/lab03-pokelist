@@ -1,6 +1,7 @@
 import React from 'react'
 import PokeItem from './PokeItem.js';
 import pokes from './data.js';
+import style from './PokeList.css';
 
 export default class PokeList extends React.Component {
     render() {

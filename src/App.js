@@ -4,13 +4,14 @@ import logo from './logo.svg';
 import './App.css';
 import HomePage from './HomePage.js';
 import SearchPage from './SearchPage.js';
+import Header from './Header.js';
 
 export default class App extends React.Component {
   render() {
     return (
       <div>
-        <p>App is online!</p>
         <Router>
+          <Header />
           <Switch>
             <Route
               path="/"
