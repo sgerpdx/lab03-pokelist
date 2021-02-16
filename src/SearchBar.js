@@ -1,5 +1,5 @@
 import React from 'react'
-import pokes from './data.js';
+//import pokes from './data.js';
 
 export default class SearchBar extends React.Component {
     render() {
@@ -10,7 +10,7 @@ export default class SearchBar extends React.Component {
                     Pokemon:
                     <input type="text" value={this.props.currentValue}
                         onChange={this.props.handleChange}
-                        key={pokes.pokemon} />
+                        key={this.props.query} />
                 </label>
             </form>
 

@@ -22,33 +22,31 @@ export default class SearchPage extends React.Component {
     }
 
     retrievePokemon = async () => {
-        const data = await request.get('https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=char&defense=50');
+        const data = await request.get('https://pokedex-alchemy.herokuapp.com/api/pokedex');
+        // const data = await request.get('https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}')
         //this.setState({loading: true});
-
         this.setState({
             pokemon: data.body.results,
         })
-
         //this.setState({loading: false});
 
     }
 
-    handleOrderChange = (e) => {
-        this.setState({
-            order: e.target.value
-        });
-    }
-
-    handleCategoryChange = (e) => {
-        this.setState({
-            category: e.target.value
-        });
-    }
-
-    // Dani's button code:
-    // handleClick = async () => {
-    //     await this.fetchPokemon();
+    // handleOrderChange = (e) => {
+    //     this.setState({
+    //         order: e.target.value
+    //     });
     // }
+
+    // handleCategoryChange = (e) => {
+    //     this.setState({
+    //         category: e.target.value
+    //     });
+    // }
+
+    handleClick = async () => {
+        await this.retrievePokemon();
+    }
 
     handleInputChange = (e) => {
         this.setState({
@@ -58,15 +56,15 @@ export default class SearchPage extends React.Component {
 
     render() {
 
-        if (this.state.order === 'Ascending') {
-            pokes.sort((a, b) =>
-                a[this.state.category].localeCompare(b[this.state.category]));
-        } else {
-            pokes.sort((a, b) =>
-                b[this.state.category].localeCompare(a[this.state.category]));
-        }
+        // if (this.state.order === 'Ascending') {
+        //     pokes.sort((a, b) =>
+        //         a[this.state.category].localeCompare(b[this.state.category]));
+        // } else {
+        //     pokes.sort((a, b) =>
+        //         b[this.state.category].localeCompare(a[this.state.category]));
+        // }
 
-        const filteredPokes = pokes.filter(poke => poke.pokemon.includes(this.state.query))
+        // const filteredPokes = pokes.filter(poke => poke.pokemon.includes(this.state.query))
 
         return (
             <section>
@@ -74,13 +72,12 @@ export default class SearchPage extends React.Component {
                     <nav className="search-area">
 
                         <SearchBar currentValue={this.state.query}
-                            handleChange={this.handleInputChange}
-                            handleSubmit={this.handleInputSubmit} />
+                            handleChange={this.handleInputChange} />
 
                         {/* need to figure out where to put this, either here or in SearchBar component */}
-                        {/* <button onClick={this.handleClick}>Go!</button> */}
+                        <button onClick={this.handleClick}>Search!</button>
 
-                        <form className="sort-box">
+                        {/* <form className="sort-box">
                             Order:
                             <Sort currentValue={this.state.order}
                                 handleChange={this.handleOrderChange}
@@ -92,11 +89,20 @@ export default class SearchPage extends React.Component {
                             <Sort currentValue={this.state.category}
                                 handleChange={this.handleCategoryChange}
                                 options={['pokemon', 'ability_1', 'egg_group_2', 'shape']} />
-                        </form>
+                        </form> */}
 
                     </nav>
                     {/* spinner here? */}
-                    <PokeList pokes={filteredPokes} />
+
+                    <div>
+                        {this.state.pokemon.map(poke =>
+                            <div>
+                                <img src={poke.url_image} alt="invisible-monster" height="100" />
+                            </div>
+                        )}
+                    </div>
+
+                    {/* <PokeList pokes={filteredPokes} /> */}
                 </div>
             </section>
 
