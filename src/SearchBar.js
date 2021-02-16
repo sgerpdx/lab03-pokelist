@@ -4,11 +4,6 @@ import pokes from './data.js';
 export default class SearchBar extends React.Component {
     render() {
         return (
-            // <input type="text" value={this.props.currentValue}
-            //     onSubmit={this.props.handleSubmit}
-            //     key={pokes.pokemon}>
-
-            // </input>
 
             <form className="input-search">
                 <label>

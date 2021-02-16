@@ -5,6 +5,7 @@ import SearchBar from './SearchBar.js';
 import Sort from './Sort.js';
 import Header from './Header.js';
 import style from './SearchPage.css';
+import request from 'superagent';
 
 export default class SearchPage extends React.Component {
 
@@ -12,6 +13,7 @@ export default class SearchPage extends React.Component {
         query: '',
         order: 'Ascending',
         category: 'pokemon',
+        pokemon: [],
     }
 
     handleOrderChange = (e) => {
@@ -33,9 +35,6 @@ export default class SearchPage extends React.Component {
     }
 
     render() {
-        console.log(this.state.query);
-        console.log(this.state.category);
-        console.log(this.state.order);
 
         if (this.state.order === 'Ascending') {
             pokes.sort((a, b) =>
@@ -46,7 +45,6 @@ export default class SearchPage extends React.Component {
         }
 
         const filteredPokes = pokes.filter(poke => poke.pokemon.includes(this.state.query))
-        console.log(filteredPokes);
 
         return (
             <section>
