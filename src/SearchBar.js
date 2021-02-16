@@ -9,11 +9,9 @@ export default class SearchBar extends React.Component {
                 <label>
                     Pokemon:
                     <input type="text" value={this.props.currentValue}
-                        onChange={this.props.handleChange}
-                        key={this.props.query} />
+                        onChange={this.props.handleChange} />
                 </label>
             </form>
-
 
         )
     }
