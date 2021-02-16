@@ -14,6 +14,23 @@ export default class SearchPage extends React.Component {
         order: 'Ascending',
         category: 'pokemon',
         pokemon: [],
+        load: false,
+    }
+
+    componentDidMount = async () => {
+        await this.retrievePokemon();
+    }
+
+    retrievePokemon = async () => {
+        const data = await request.get('https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=char&defense=50');
+        //this.setState({loading: true});
+
+        this.setState({
+            pokemon: data.body.results,
+        })
+
+        //this.setState({loading: false});
+
     }
 
     handleOrderChange = (e) => {
@@ -27,6 +44,11 @@ export default class SearchPage extends React.Component {
             category: e.target.value
         });
     }
+
+    // Dani's button code:
+    // handleClick = async () => {
+    //     await this.fetchPokemon();
+    // }
 
     handleInputChange = (e) => {
         this.setState({
@@ -55,6 +77,9 @@ export default class SearchPage extends React.Component {
                             handleChange={this.handleInputChange}
                             handleSubmit={this.handleInputSubmit} />
 
+                        {/* need to figure out where to put this, either here or in SearchBar component */}
+                        {/* <button onClick={this.handleClick}>Go!</button> */}
+
                         <form className="sort-box">
                             Order:
                             <Sort currentValue={this.state.order}
@@ -70,6 +95,7 @@ export default class SearchPage extends React.Component {
                         </form>
 
                     </nav>
+                    {/* spinner here? */}
                     <PokeList pokes={filteredPokes} />
                 </div>
             </section>
