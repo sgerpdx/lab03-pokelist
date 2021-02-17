@@ -75,6 +75,12 @@ export default class SearchPage extends React.Component {
                 <div className="search-layout">
                     <nav className="search-area">
 
+                        <div className="page-fwd-back">
+                            <button className="pg-nav" onClick={this.handlePrevClick} disabled={this.state.currentPage === 1}>Prev</button>
+                            <h4><em>Page {this.state.currentPage}</em></h4>
+                            <button className="pg-nav" onClick={this.handleNextClick}>Next</button>
+                        </div>
+
                         <SearchBar currentValue={this.state.query}
                             handleChange={this.handleInputChange} />
 
