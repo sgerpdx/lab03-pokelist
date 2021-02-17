@@ -29,26 +29,25 @@ export default class PokeDetail extends React.Component {
     }
 
 
-    // handlePokeClick = async () => {
-    //     this.setState({
-    //         pokeName: this.state.pokeData.pokemon
-    //     })
-    //     await this.loadPokemon();
-    // }
-
-
     render() {
 
         return (
             <>
-                <h3>This Page Contains Very Specific Info</h3>
                 {
                     this.state.loading
                         ? <Spinner />
-                        : <div>pokemon info goes here, maybe poke item
-                            <img onClick={this.handlePokeClick}
-                                src={this.state.pokeData.url_image} alt="smallmonster" />
-                            <p>{this.state.pokeData.pokemon}</p>
+                        : <div className="poke-detail">
+                            <div classname="poke-text">
+                                <p>it is none other than...</p>
+                                <h2>{this.state.pokeData.pokemon}</h2>
+                            </div>
+                            <div className="poke-details">
+                                <img className="poke-image" onClick={this.handlePokeClick}
+                                    src={this.state.pokeData.url_image} height="300" alt="smallmonster" />
+                                <p>egg group / shape / ability</p>
+                                <p className="stat-text">{this.state.pokeData.egg_group_2} -- {this.state.pokeData.shape} -- {this.state.pokeData.ability_1}</p>
+                            </div>
+
                         </div>
                 }
             </>
