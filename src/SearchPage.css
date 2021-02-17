@@ -13,3 +13,9 @@
     color: black;
     border-radius: 200px 100px / 200px 0px;
 }
+
+.display-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

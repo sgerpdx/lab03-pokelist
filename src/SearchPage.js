@@ -6,15 +6,16 @@ import Sort from './Sort.js';
 import Header from './Header.js';
 import style from './SearchPage.css';
 import request from 'superagent';
+import Spinner from './Spinner.js';
 
 export default class SearchPage extends React.Component {
 
     state = {
         query: '',
-        order: 'asc',
-        category: 'pokemon',
+        order: '',
+        category: '',
         pokemon: [],
-        //load: false,
+        loading: false,
     }
 
     componentDidMount = async () => {
@@ -22,13 +23,15 @@ export default class SearchPage extends React.Component {
     }
 
     retrievePokemon = async () => {
-        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&direction=${this.state.order}`);
+        this.setState({ loading: true });
 
-        //this.setState({loading: true});
+        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.category}&direction=${this.state.order}&perPage=30`);
+
         this.setState({
             pokemon: data.body.results,
         })
-        //this.setState({loading: false});
+
+        this.setState({ loading: false });
 
     }
 
@@ -68,8 +71,6 @@ export default class SearchPage extends React.Component {
                         <SearchBar currentValue={this.state.query}
                             handleChange={this.handleInputChange} />
 
-                        <button onClick={this.handleClick} className="poke-button">Search!</button>
-
                         <form className="sort-box">
                             Order:
                             <Sort currentValue={this.state.order}
@@ -84,11 +85,16 @@ export default class SearchPage extends React.Component {
                                 options={['pokemon', 'ability_1', 'egg_group_2', 'shape']} />
                         </form>
 
+                        <button onClick={this.handleClick} className="poke-button">Search!</button>
+
                     </nav>
 
-                    {/* spinner here? */}
+                    <div className="display-area">
+                        {this.state.loading ? <Spinner /> :
 
-                    <PokeList pokes={this.state.pokemon} />
+                            <PokeList pokes={this.state.pokemon} />}
+                    </div>
+
                 </div>
             </section>
 
