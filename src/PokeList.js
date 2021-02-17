@@ -10,8 +10,7 @@ export default class PokeList extends React.Component {
 
         return (
             <ul className="list-area"
-                key={pokes.pokemon}
-                onClick={this.props.handleChange}>
+                key={pokes.pokemon}>
                 {pokeListItem}
             </ul>
         )

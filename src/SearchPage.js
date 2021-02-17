@@ -18,7 +18,7 @@ export default class SearchPage extends React.Component {
         loading: false,
         totalPokemon: 0,
         currentPage: 1,
-        pokeName: '',
+        //pokeName: '',
     }
 
     componentDidMount = async () => {
@@ -28,7 +28,7 @@ export default class SearchPage extends React.Component {
     retrievePokemon = async () => {
         this.setState({ loading: true });
 
-        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.category}&direction=${this.state.order}&page=${this.state.currentPage}&perPage=30`);
+        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.category}&direction=${this.state.order}&page=${this.state.currentPage}&perPage=20`);
 
         await this.setState({
             pokeData: data.body.results,
@@ -80,12 +80,12 @@ export default class SearchPage extends React.Component {
         await this.retrievePokemon();
     }
 
-    handlePokeClick = async () => {
-        this.setState({
-            pokeName: this.state.pokeData.pokemon
-        })
-        await this.retrievePokemon();
-    }
+    // handlePokeClick = async () => {
+    //     this.setState({
+    //         pokeName: this.state.pokeData.pokemon
+    //     })
+    //     await this.retrievePokemon();
+    // }
 
     // handlePerPage = (e) => {
     //     this.setState({ perPage: e.target.value })
@@ -132,9 +132,10 @@ export default class SearchPage extends React.Component {
                     </nav>
 
                     <div className="display-area">
-                        {this.state.loading ? <Spinner /> :
-
-                            <PokeList pokes={this.state.pokeData} handleChange={this.handlePokeClick} />}
+                        {this.state.loading
+                            ? <Spinner />
+                            : <PokeList pokes={this.state.pokeData} />
+                        }
                     </div>
 
                 </div>

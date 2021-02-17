@@ -47,7 +47,7 @@ export default class PokeDetail extends React.Component {
                         ? <Spinner />
                         : <div>pokemon info goes here, maybe poke item
                             <img onClick={this.handlePokeClick}
-                                src={this.state.pokeData.url_image} alt="othermonster" />
+                                src={this.state.pokeData.url_image} alt="smallmonster" />
                             <p>{this.state.pokeData.pokemon}</p>
                         </div>
                 }
