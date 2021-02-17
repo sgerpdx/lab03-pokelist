@@ -17,7 +17,7 @@ export default class SearchPage extends React.Component {
         pokeData: [],
         loading: false,
         totalPokemon: 0,
-        currentPage: 0,
+        currentPage: 1,
     }
 
     componentDidMount = async () => {
@@ -27,10 +27,11 @@ export default class SearchPage extends React.Component {
     retrievePokemon = async () => {
         this.setState({ loading: true });
 
-        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.category}&direction=${this.state.order}&perPage=30`);
+        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.category}&direction=${this.state.order}&page=${this.state.currentPage}&perPage=30`);
 
-        this.setState({
+        await this.setState({
             pokeData: data.body.results,
+            //totalPokemon: data.body.count,
         })
 
         this.setState({ loading: false });
@@ -50,6 +51,8 @@ export default class SearchPage extends React.Component {
     }
 
     handleClick = async () => {
+        //await this.setState({ currentPage: 1 });
+
         await this.retrievePokemon();
     }
 
@@ -59,10 +62,33 @@ export default class SearchPage extends React.Component {
         })
     }
 
+
+    handlePrevClick = async () => {
+        this.setState({
+            currentPage: this.state.currentPage - 1
+        })
+
+        await this.retrievePokemon();
+    }
+
+    handleNextClick = async () => {
+        this.setState({
+            currentPage: this.state.currentPage + 1
+        })
+
+        await this.retrievePokemon();
+    }
+
+    // handlePerPage = (e) => {
+    //     this.setState({ perPage: e.target.value })
+    // }
+
     render() {
         console.log(this.state.query);
         console.log(this.state.order);
         console.log(this.state.category);
+
+        //const lastPage = Math.round({ this.state.totalPokemon } / 50);
 
         // Dani has this in the code here:
         // const {
