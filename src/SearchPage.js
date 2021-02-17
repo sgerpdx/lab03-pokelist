@@ -11,8 +11,8 @@ export default class SearchPage extends React.Component {
 
     state = {
         query: '',
-        //order: 'Ascending',
-        //category: 'pokemon',
+        order: 'asc',
+        category: 'pokemon',
         pokemon: [],
         //load: false,
     }
@@ -22,8 +22,8 @@ export default class SearchPage extends React.Component {
     }
 
     retrievePokemon = async () => {
-        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}`);
-        // const data = await request.get('https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}')
+        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&direction=${this.state.order}`);
+
         //this.setState({loading: true});
         this.setState({
             pokemon: data.body.results,
@@ -32,17 +32,17 @@ export default class SearchPage extends React.Component {
 
     }
 
-    // handleOrderChange = (e) => {
-    //     this.setState({
-    //         order: e.target.value
-    //     });
-    // }
+    handleOrderChange = (e) => {
+        this.setState({
+            order: e.target.value
+        });
+    }
 
-    // handleCategoryChange = (e) => {
-    //     this.setState({
-    //         category: e.target.value
-    //     });
-    // }
+    handleCategoryChange = (e) => {
+        this.setState({
+            category: e.target.value
+        });
+    }
 
     handleClick = async () => {
         await this.retrievePokemon();
@@ -56,15 +56,9 @@ export default class SearchPage extends React.Component {
 
     render() {
         console.log(this.state.query);
-        // if (this.state.order === 'Ascending') {
-        //     pokes.sort((a, b) =>
-        //         a[this.state.category].localeCompare(b[this.state.category]));
-        // } else {
-        //     pokes.sort((a, b) =>
-        //         b[this.state.category].localeCompare(a[this.state.category]));
-        // }
+        console.log(this.state.order);
+        console.log(this.state.category);
 
-        // const filteredPokes = pokes.filter(poke => poke.pokemon.includes(this.state.query))
 
         return (
             <section>
@@ -74,14 +68,13 @@ export default class SearchPage extends React.Component {
                         <SearchBar currentValue={this.state.query}
                             handleChange={this.handleInputChange} />
 
-                        {/* need to figure out where to put this, either here or in SearchBar component */}
                         <button onClick={this.handleClick} className="poke-button">Search!</button>
 
                         <form className="sort-box">
                             Order:
                             <Sort currentValue={this.state.order}
                                 handleChange={this.handleOrderChange}
-                                options={['Ascending', 'Descending']} />
+                                options={['asc', 'desc']} />
                         </form>
 
                         <form className="sort-box">
@@ -92,19 +85,8 @@ export default class SearchPage extends React.Component {
                         </form>
 
                     </nav>
-                    {/* spinner here? */}
 
-                    {/* <div>
-                        {this.state.pokemon.map(poke =>
-                            <div>
-                                <img src={poke.url_image} alt="invisible-monster" height="100" />
-                                <p>{poke.pokemon}</p>
-                                <p>{poke.ability_1}</p>
-                                <p>{poke.egg_group_2}</p>
-                                <p>{poke.shape}</p>
-                            </div>
-                        )}
-                    </div> */}
+                    {/* spinner here? */}
 
                     <PokeList pokes={this.state.pokemon} />
                 </div>
