@@ -16,15 +16,6 @@ export default class Header extends React.Component {
                 </NavLink>
                 <p className="title-area">Pokedexception</p>
             </header>
-
-            // <div className="header-area"
-            //     key={pokes.pokemon}>
-            //     <div className="left-space"></div>
-            //     <p className="title-area">Pokedexception</p>
-            //     <div className="right-space">
-            //         <span className="nav-link">Home</span>
-            //     </div>
-            // </div>
         )
     }
 }

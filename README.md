@@ -1,6 +1,6 @@
 # React Structural Plan for Pokelist:
 
-![Miro Diagram](./sc_React-flow_Pokedex.png)
+![Miro Diagram](./public/sc_React-flow_Pokedex.png)
 
 # Getting Started with Create React App
 
