@@ -14,8 +14,10 @@ export default class SearchPage extends React.Component {
         query: '',
         order: '',
         category: '',
-        pokemon: [],
+        pokeData: [],
         loading: false,
+        totalPokemon: 0,
+        currentPage: 0,
     }
 
     componentDidMount = async () => {
@@ -28,7 +30,7 @@ export default class SearchPage extends React.Component {
         const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.category}&direction=${this.state.order}&perPage=30`);
 
         this.setState({
-            pokemon: data.body.results,
+            pokeData: data.body.results,
         })
 
         this.setState({ loading: false });
@@ -62,6 +64,11 @@ export default class SearchPage extends React.Component {
         console.log(this.state.order);
         console.log(this.state.category);
 
+        // Dani has this in the code here:
+        // const {
+        //     pokemonData,
+        //     loading,
+        // } = this.state;
 
         return (
             <section>
@@ -92,7 +99,7 @@ export default class SearchPage extends React.Component {
                     <div className="display-area">
                         {this.state.loading ? <Spinner /> :
 
-                            <PokeList pokes={this.state.pokemon} />}
+                            <PokeList pokes={this.state.pokeData} />}
                     </div>
 
                 </div>
