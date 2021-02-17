@@ -7,7 +7,6 @@ export default class PokeDetail extends React.Component {
 
     state = {
         pokeData: {},
-        //pokeName: '',
     }
 
 

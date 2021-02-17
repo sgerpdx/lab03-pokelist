@@ -18,7 +18,6 @@ export default class SearchPage extends React.Component {
         loading: false,
         totalPokemon: 0,
         currentPage: 1,
-        //pokeName: '',
     }
 
     componentDidMount = async () => {
@@ -30,9 +29,9 @@ export default class SearchPage extends React.Component {
 
         const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.category}&direction=${this.state.order}&page=${this.state.currentPage}&perPage=20`);
 
-        await this.setState({
+        this.setState({
             pokeData: data.body.results,
-            //totalPokemon: data.body.count,
+            totalPokemon: data.body.count,
         })
 
         this.setState({ loading: false });
@@ -52,9 +51,9 @@ export default class SearchPage extends React.Component {
     }
 
     handleClick = async () => {
-        await this.setState({ currentPage: 1 });
+        this.setState({ currentPage: 1 });
 
-        await this.retrievePokemon();
+        this.retrievePokemon();
     }
 
     handleInputChange = (e) => {
@@ -65,7 +64,7 @@ export default class SearchPage extends React.Component {
 
 
     handlePrevClick = async () => {
-        this.setState({
+        await this.setState({
             currentPage: this.state.currentPage - 1
         })
 
@@ -73,30 +72,20 @@ export default class SearchPage extends React.Component {
     }
 
     handleNextClick = async () => {
-        this.setState({
+        await this.setState({
             currentPage: this.state.currentPage + 1
         })
 
         await this.retrievePokemon();
     }
 
-    // handlePokeClick = async () => {
-    //     this.setState({
-    //         pokeName: this.state.pokeData.pokemon
-    //     })
-    //     await this.retrievePokemon();
-    // }
-
-    // handlePerPage = (e) => {
-    //     this.setState({ perPage: e.target.value })
-    // }
 
     render() {
         console.log(this.state.query);
         console.log(this.state.order);
         console.log(this.state.category);
 
-        //const lastPage = Math.round({ this.state.totalPokemon } / 50);
+        const finalPage = (Math.floor(this.state.totalPokemon) / 20)
 
 
         return (
@@ -107,7 +96,7 @@ export default class SearchPage extends React.Component {
                         <div className="page-fwd-back">
                             <button className="pg-nav" onClick={this.handlePrevClick} disabled={this.state.currentPage === 1}>Prev</button>
                             <h4><em>Page {this.state.currentPage}</em></h4>
-                            <button className="pg-nav" onClick={this.handleNextClick}>Next</button>
+                            <button className="pg-nav" onClick={this.handleNextClick} disabled={this.state.currentPage >= finalPage}>Next</button>
                         </div>
 
                         <SearchBar currentValue={this.state.query}
@@ -139,7 +128,7 @@ export default class SearchPage extends React.Component {
                     </div>
 
                 </div>
-            </section>
+            </section >
 
 
         )
