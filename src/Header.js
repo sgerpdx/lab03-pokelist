@@ -11,7 +11,7 @@ export default class Header extends React.Component {
                     Home
                 </NavLink>
 
-                <NavLink exact activeClassName="selected" to="/search">
+                <NavLink exact activeClassName="selected" to="/pokemon">
                     Search
                 </NavLink>
                 <p className="title-area">Pokedexception</p>

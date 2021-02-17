@@ -14,8 +14,10 @@ export default class SearchPage extends React.Component {
         query: '',
         order: '',
         category: '',
-        pokemon: [],
+        pokeData: [],
         loading: false,
+        totalPokemon: 0,
+        currentPage: 1,
     }
 
     componentDidMount = async () => {
@@ -25,10 +27,11 @@ export default class SearchPage extends React.Component {
     retrievePokemon = async () => {
         this.setState({ loading: true });
 
-        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.category}&direction=${this.state.order}&perPage=30`);
+        const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.category}&direction=${this.state.order}&page=${this.state.currentPage}&perPage=20`);
 
         this.setState({
-            pokemon: data.body.results,
+            pokeData: data.body.results,
+            totalPokemon: data.body.count,
         })
 
         this.setState({ loading: false });
@@ -48,7 +51,9 @@ export default class SearchPage extends React.Component {
     }
 
     handleClick = async () => {
-        await this.retrievePokemon();
+        this.setState({ currentPage: 1 });
+
+        this.retrievePokemon();
     }
 
     handleInputChange = (e) => {
@@ -57,16 +62,42 @@ export default class SearchPage extends React.Component {
         })
     }
 
+
+    handlePrevClick = async () => {
+        await this.setState({
+            currentPage: this.state.currentPage - 1
+        })
+
+        await this.retrievePokemon();
+    }
+
+    handleNextClick = async () => {
+        await this.setState({
+            currentPage: this.state.currentPage + 1
+        })
+
+        await this.retrievePokemon();
+    }
+
+
     render() {
         console.log(this.state.query);
         console.log(this.state.order);
         console.log(this.state.category);
+
+        const finalPage = (Math.floor(this.state.totalPokemon) / 20)
 
 
         return (
             <section>
                 <div className="search-layout">
                     <nav className="search-area">
+
+                        <div className="page-fwd-back">
+                            <button className="pg-nav" onClick={this.handlePrevClick} disabled={this.state.currentPage === 1}>Prev</button>
+                            <h4><em>Page {this.state.currentPage}</em></h4>
+                            <button className="pg-nav" onClick={this.handleNextClick} disabled={this.state.currentPage >= finalPage}>Next</button>
+                        </div>
 
                         <SearchBar currentValue={this.state.query}
                             handleChange={this.handleInputChange} />
@@ -90,13 +121,14 @@ export default class SearchPage extends React.Component {
                     </nav>
 
                     <div className="display-area">
-                        {this.state.loading ? <Spinner /> :
-
-                            <PokeList pokes={this.state.pokemon} />}
+                        {this.state.loading
+                            ? <Spinner />
+                            : <PokeList pokes={this.state.pokeData} />
+                        }
                     </div>
 
                 </div>
-            </section>
+            </section >
 
 
         )

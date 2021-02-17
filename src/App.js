@@ -5,6 +5,7 @@ import './App.css';
 import HomePage from './HomePage.js';
 import SearchPage from './SearchPage.js';
 import Header from './Header.js';
+import PokeDetail from './PokeDetail.js'
 
 export default class App extends React.Component {
   render() {
@@ -19,9 +20,14 @@ export default class App extends React.Component {
               render={(routerProps) => <HomePage {...routerProps} />}
             />
             <Route
-              path="/search"
+              path="/pokemon"
               exact
               render={(routerProps) => <SearchPage {...routerProps} />}
+            />
+            <Route
+              path="/pokemon/:pokeName"
+              exact
+              render={(routerProps) => <PokeDetail {...routerProps} />}
             />
           </Switch>
         </Router>

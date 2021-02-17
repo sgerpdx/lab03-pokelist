@@ -1,0 +1,17 @@
+.poke-detail {
+    color: goldenrod;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+.stat-text {
+    color: white;
+    /* border: solid 1px goldenrod;
+    border-radius: 5px; */
+    justify-content: center;
+    text-align: center;
+    /* padding: 5px; */
+}

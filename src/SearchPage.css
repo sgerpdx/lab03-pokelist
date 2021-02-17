@@ -16,6 +16,21 @@
 
 .display-area {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
+}
+
+.page-fwd-back {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.pg-nav {
+    height: 20px;
+    margin: 0px 5px 0px 5px;
+    background-color: goldenrod;
+    color: black;
+    border-radius: 5px;
 }
