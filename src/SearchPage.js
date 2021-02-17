@@ -18,6 +18,7 @@ export default class SearchPage extends React.Component {
         loading: false,
         totalPokemon: 0,
         currentPage: 1,
+        pokeName: '',
     }
 
     componentDidMount = async () => {
@@ -51,7 +52,7 @@ export default class SearchPage extends React.Component {
     }
 
     handleClick = async () => {
-        //await this.setState({ currentPage: 1 });
+        await this.setState({ currentPage: 1 });
 
         await this.retrievePokemon();
     }
@@ -79,6 +80,13 @@ export default class SearchPage extends React.Component {
         await this.retrievePokemon();
     }
 
+    handlePokeClick = async () => {
+        this.setState({
+            pokeName: this.state.pokeData.pokemon
+        })
+        await this.retrievePokemon();
+    }
+
     // handlePerPage = (e) => {
     //     this.setState({ perPage: e.target.value })
     // }
@@ -90,11 +98,6 @@ export default class SearchPage extends React.Component {
 
         //const lastPage = Math.round({ this.state.totalPokemon } / 50);
 
-        // Dani has this in the code here:
-        // const {
-        //     pokemonData,
-        //     loading,
-        // } = this.state;
 
         return (
             <section>
@@ -131,7 +134,7 @@ export default class SearchPage extends React.Component {
                     <div className="display-area">
                         {this.state.loading ? <Spinner /> :
 
-                            <PokeList pokes={this.state.pokeData} />}
+                            <PokeList pokes={this.state.pokeData} handleChange={this.handlePokeClick} />}
                     </div>
 
                 </div>

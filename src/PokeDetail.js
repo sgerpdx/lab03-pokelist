@@ -7,9 +7,16 @@ export default class PokeDetail extends React.Component {
 
     state = {
         pokeData: {},
+        //pokeName: '',
     }
 
+
     componentDidMount = async () => {
+        await this.loadPokemon();
+    }
+
+
+    loadPokemon = async () => {
         this.setState({ loading: true });
 
         const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.props.match.params.pokeName}`);
@@ -22,6 +29,14 @@ export default class PokeDetail extends React.Component {
     }
 
 
+    // handlePokeClick = async () => {
+    //     this.setState({
+    //         pokeName: this.state.pokeData.pokemon
+    //     })
+    //     await this.loadPokemon();
+    // }
+
+
     render() {
 
         return (
@@ -31,8 +46,9 @@ export default class PokeDetail extends React.Component {
                     this.state.loading
                         ? <Spinner />
                         : <div>pokemon info goes here, maybe poke item
-                            <img src={this.state.pokeData.url_image} alt="othermonster" />
-                            <p>{this.stte.pokeData.pokemon}</p>
+                            <img onClick={this.handlePokeClick}
+                                src={this.state.pokeData.url_image} alt="othermonster" />
+                            <p>{this.state.pokeData.pokemon}</p>
                         </div>
                 }
             </>
